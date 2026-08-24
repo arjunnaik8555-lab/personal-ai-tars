@@ -53,7 +53,6 @@ class Speaker:
         """Splits long text into manageable sentences for fast, interruptible playback."""
         if not text:
             return []
-        # Split by sentence end punctuation or newlines
         raw_chunks = re.split(r'(?<=[.!?\n])\s+', text)
         sentences = [c.strip() for c in raw_chunks if c.strip()]
         return sentences
@@ -61,6 +60,8 @@ class Speaker:
     def stop(self):
         """Immediately interrupts and halts any currently playing or scheduled speech."""
         self._stop_event.set()
+        self._is_speaking = False
+
         with self._lock:
             if self._current_process and self._current_process.poll() is None:
                 try:
@@ -70,33 +71,37 @@ class Speaker:
                     pass
                 self._current_process = None
 
-            # Force kill any active afplay on macOS
+            # Force-kill all running audio playback processes on macOS instantly
             if platform.system() == "Darwin":
                 try:
-                    subprocess.run(["pkill", "-9", "-f", "tars_sentence_"], capture_output=True, check=False)
+                    subprocess.run(["pkill", "-9", "-f", "afplay"], capture_output=True, check=False)
+                    subprocess.run(["pkill", "-9", "-f", "say"], capture_output=True, check=False)
                 except Exception:
                     pass
-        self._is_speaking = False
 
     def _play_audio_process(self, cmd: list[str]) -> bool:
-        """Runs audio command asynchronously while constantly monitoring for stop interrupt."""
+        """Runs audio command while constantly monitoring for stop interrupt."""
         if self._stop_event.is_set():
             return False
 
         with self._lock:
             try:
                 self._current_process = subprocess.Popen(cmd, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-            except Exception as e:
+            except Exception:
                 return False
 
-        # Poll process status every 40ms to catch user interruptions instantly
+        # Poll process status every 30ms for instant interruption
         while self._current_process and self._current_process.poll() is None:
             if self._stop_event.is_set():
-                self.stop()
+                try:
+                    self._current_process.terminate()
+                    self._current_process.kill()
+                except Exception:
+                    pass
                 return False
-            time.sleep(0.04)
+            time.sleep(0.03)
 
-        return True
+        return not self._stop_event.is_set()
 
     def _speak_sentence_neural(self, sentence: str, file_idx: int) -> bool:
         """Synthesizes and plays a single sentence using edge-tts."""
@@ -112,6 +117,9 @@ class Speaker:
 
         try:
             asyncio.run(_synth())
+            if self._stop_event.is_set():
+                return False
+
             if os.path.exists(temp_audio) and os.path.getsize(temp_audio) > 0:
                 if platform.system() == "Darwin":
                     return self._play_audio_process(["afplay", temp_audio])
@@ -129,7 +137,7 @@ class Speaker:
         return False
 
     def speak(self, text: str, on_sentence: Optional[Callable[[str], None]] = None):
-        """Speaks text sentence-by-sentence. Can be instantly stopped at any time by calling stop()."""
+        """Speaks text sentence-by-sentence. Instantly aborts when stop() is called."""
         if not self.enabled:
             return
 
@@ -150,10 +158,12 @@ class Speaker:
                 if on_sentence:
                     on_sentence(sentence)
 
-                # Try Neural speech, then fallback
                 success = self._speak_sentence_neural(sentence, idx % 5)
                 if not success and not self._stop_event.is_set():
                     self._speak_sentence_fallback(sentence)
+
+                if self._stop_event.is_set():
+                    break
 
         finally:
             self._is_speaking = False

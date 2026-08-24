@@ -27,10 +27,11 @@ class TarsAgent:
             "TOOLS & CAPABILITIES:\n"
             "1. Web Search & Browsing: search_web for real-time info, facts, news, documentation; "
             "fetch_webpage_content to inspect specific websites; open_in_browser to launch URLs or Google searches in Google Chrome.\n"
-            "2. Weather: get_weather for live global temperature and weather forecasts (if city is not specified or incomplete, fetch for current location).\n"
-            "3. System Tools: get_current_time, get_system_status, open_application.\n\n"
-            "When the user asks any question requiring up-to-date information, facts, live data, or web actions, "
-            "use your tools proactively to find accurate answers."
+            "2. Messaging & Communication: send_whatsapp_message to open a WhatsApp chat with a contact/phone number and dispatch messages.\n"
+            "3. Weather: get_weather for live global temperature and weather forecasts (if city is not specified or incomplete, fetch for current location).\n"
+            "4. System Tools: get_current_time, get_system_status, open_application.\n\n"
+            "When the user asks any question requiring up-to-date information, facts, live data, or web/messaging actions, "
+            "use your tools proactively to find accurate answers or perform actions."
         )
 
         self._init_chat_session(self.active_model)

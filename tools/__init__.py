@@ -9,6 +9,9 @@ from tools.web_tools import (
     fetch_webpage_content,
     get_weather,
 )
+from tools.whatsapp_tools import (
+    send_whatsapp_message,
+)
 
 # Complete list of callable tools provided to Gemini
 ALL_TOOLS = [
@@ -19,4 +22,5 @@ ALL_TOOLS = [
     open_in_browser,
     fetch_webpage_content,
     get_weather,
+    send_whatsapp_message,
 ]
