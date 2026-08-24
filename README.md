@@ -13,6 +13,14 @@ A modular, autonomous AI assistant inspired by TARS from *Interstellar*, built w
   - `get_system_status()`: macOS battery percentage, charging state, OS and hardware specs.
   - `open_application(app_name)`: Launches macOS desktop applications (e.g. Spotify, Notes, Calculator, Terminal).
 
+### Milestone 2: Voice & Hands-Free Interaction
+- **Speech-to-Text (STT)**: Microphone listening with ambient noise suppression.
+- **Text-to-Speech (TTS)**: High-speed, natural speech synthesis powered by macOS speech (configurable voice, e.g. `Daniel`).
+- **Interactive Modes**:
+  - `[T] Text Mode`: Standard keyboard input with spoken responses.
+  - `[V] Voice Mode`: Complete hands-free conversational loop (speak & listen).
+  - Quick commands: `voice` / `v`, `text` / `t`, `mute` / `unmute`.
+
 ---
 
 ## 🛠️ Setup & Running
@@ -43,9 +51,9 @@ A modular, autonomous AI assistant inspired by TARS from *Interstellar*, built w
 
 ## 🗺️ Project Roadmap
 - [x] **Milestone 1**: Core Tool Calling & System Control
-- [ ] **Milestone 2**: Web Search & Real-Time Info
-- [ ] **Milestone 3**: File System & Workspace Automation
-- [ ] **Milestone 4**: Persistent Memory (SQLite)
-- [ ] **Milestone 5**: Voice Interface (Speech-to-Text & TTS)
+- [x] **Milestone 2**: Voice Interface (Speech-to-Text & Text-to-Speech)
+- [ ] **Milestone 3**: Web Search & Real-Time Info
+- [ ] **Milestone 4**: File System & Workspace Automation
+- [ ] **Milestone 5**: Persistent Long-Term Memory (SQLite)
 - [ ] **Milestone 6**: Multimodal Screen & Vision Perception
 - [ ] **Milestone 7**: Personality Tuning (Humor / Honesty) & Autonomous Schedulers
