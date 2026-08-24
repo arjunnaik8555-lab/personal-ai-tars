@@ -1,6 +1,13 @@
 import sys
 from agent.agent import TarsAgent
-from config.settings import GEMINI_MODEL, VOICE_ENABLED, VOICE_NAME, VOICE_RATE
+from config.settings import (
+    GEMINI_MODEL,
+    VOICE_ENABLED,
+    VOICE_NAME,
+    VOICE_RATE,
+    VOICE_PAUSE_SECONDS,
+    SPEECH_LANGUAGE,
+)
 from voice import Speaker, Listener
 
 
@@ -9,6 +16,7 @@ def main():
     print("🤖 TARS System Online [Phase 2: Voice & Hands-Free Interaction]")
     print(f"🧠 Model: {GEMINI_MODEL}")
     print(f"🔊 Voice: {'Enabled' if VOICE_ENABLED else 'Disabled'} ({VOICE_NAME})")
+    print(f"🎙️  STT Language: {SPEECH_LANGUAGE} | Pause Tolerance: {VOICE_PAUSE_SECONDS}s")
     print("🎙️  Commands:")
     print("   • Type 'v' or 'voice'  ➔ Switch to Voice Mode (hands-free speaking)")
     print("   • Type 't' or 'text'   ➔ Switch to Text Mode (keyboard typing)")
@@ -23,7 +31,7 @@ def main():
         sys.exit(1)
 
     speaker = Speaker(voice=VOICE_NAME, rate=VOICE_RATE, enabled=VOICE_ENABLED)
-    listener = Listener()
+    listener = Listener(pause_threshold=VOICE_PAUSE_SECONDS, language=SPEECH_LANGUAGE)
     voice_mode = False
 
     # Optional boot-up greeting
