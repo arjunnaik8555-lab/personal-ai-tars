@@ -2,3 +2,6 @@ google-genai
 python-dotenv
 SpeechRecognition
 pyaudio
+ddgs
+beautifulsoup4
+httpx

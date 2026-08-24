@@ -6,7 +6,7 @@ from tools import ALL_TOOLS
 
 
 class TarsAgent:
-    """TARS Agent capable of reasoning, conversation, and executing local system tools."""
+    """TARS Agent capable of reasoning, conversation, internet browsing, and executing local tools."""
 
     def __init__(self):
         self.client = genai.Client(api_key=GEMINI_API_KEY)
@@ -14,9 +14,13 @@ class TarsAgent:
         self.system_instruction = (
             "You are TARS, a personal AI robot assistant inspired by Interstellar. "
             "You are intelligent, practical, highly capable, concise, and have a subtle wit. "
-            "You have direct access to tools to interact with the user's computer "
-            "(e.g., getting current time, checking system and battery status, launching applications). "
-            "When the user asks for actions or real-time info, use your tools proactively."
+            "You have direct access to tools to interact with the user's computer and the internet:\n"
+            "1. Web Search & Browsing: search_web for real-time information, news, questions, documentation; "
+            "fetch_webpage_content to read specific webpages/articles; open_in_browser to open URLs or searches in Google Chrome.\n"
+            "2. Weather: get_weather for live weather in any location.\n"
+            "3. System Tools: get_current_time, get_system_status, open_application.\n"
+            "When the user asks any question requiring up-to-date information, facts, live data, or web actions, "
+            "use your tools proactively to find accurate answers."
         )
 
         config = types.GenerateContentConfig(

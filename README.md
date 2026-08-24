@@ -21,6 +21,12 @@ A modular, autonomous AI assistant inspired by TARS from *Interstellar*, built w
   - `[V] Voice Mode`: Complete hands-free conversational loop (speak & listen).
   - Quick commands: `voice` / `v`, `text` / `t`, `mute` / `unmute`.
 
+### Milestone 3: Web Search, Chrome & Live Intelligence
+- **Live Web Search (`search_web`)**: Real-time web search for any question, current news, sports scores, tutorials, and research.
+- **Google Chrome Integration (`open_in_browser`)**: Opens URLs and Google searches directly in Google Chrome / default browser.
+- **Webpage Reader (`fetch_webpage_content`)**: Scrapes and analyzes articles, documentation, or links.
+- **Live Weather (`get_weather`)**: Live weather forecasts and conditions for any city globally.
+
 ---
 
 ## 🛠️ Setup & Running
@@ -52,8 +58,8 @@ A modular, autonomous AI assistant inspired by TARS from *Interstellar*, built w
 ## 🗺️ Project Roadmap
 - [x] **Milestone 1**: Core Tool Calling & System Control
 - [x] **Milestone 2**: Voice Interface (Speech-to-Text & Text-to-Speech)
-- [ ] **Milestone 3**: Web Search & Real-Time Info
-- [ ] **Milestone 4**: File System & Workspace Automation
-- [ ] **Milestone 5**: Persistent Long-Term Memory (SQLite)
-- [ ] **Milestone 6**: Multimodal Screen & Vision Perception
+- [x] **Milestone 3**: Web Search, Chrome Integration & Live Intelligence
+- [ ] **Milestone 4**: File System & Workspace Automation (Read, write, search files)
+- [ ] **Milestone 5**: Persistent Long-Term Memory (SQLite database for facts & history)
+- [ ] **Milestone 6**: Multimodal Screen & Vision Perception (Screenshot analysis)
 - [ ] **Milestone 7**: Personality Tuning (Humor / Honesty) & Autonomous Schedulers
