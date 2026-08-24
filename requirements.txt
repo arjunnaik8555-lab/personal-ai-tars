@@ -5,3 +5,4 @@ pyaudio
 ddgs
 beautifulsoup4
 httpx
+edge-tts

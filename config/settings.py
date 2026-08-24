@@ -12,7 +12,7 @@ if not GEMINI_API_KEY:
         "Refer to .env.example for guidance."
     )
 
-# Voice configuration (macOS speech)
+# Voice configuration (Neural speech / macOS fallback)
 VOICE_ENABLED = os.getenv("VOICE_ENABLED", "true").lower() in ("true", "1", "yes")
-VOICE_NAME = os.getenv("VOICE_NAME", "Daniel")
+VOICE_NAME = os.getenv("VOICE_NAME", "en-US-GuyNeural")
 VOICE_RATE = int(os.getenv("VOICE_RATE", "185"))
