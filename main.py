@@ -1,5 +1,4 @@
 import sys
-import threading
 from agent.agent import TarsAgent
 from config.settings import (
     GEMINI_MODEL,
@@ -9,22 +8,39 @@ from config.settings import (
     VOICE_PAUSE_SECONDS,
     SPEECH_LANGUAGE,
 )
+from memory.database import global_db
 from voice import Speaker, Listener
 
 
-def main():
-    print("=" * 65)
-    print("🤖 TARS System Online [Real-Time Voice & Interruptible Speech]")
-    print(f"🧠 Model: {GEMINI_MODEL}")
-    print(f"🔊 Voice: {'Enabled' if VOICE_ENABLED else 'Disabled'} ({VOICE_NAME})")
+def print_banner():
+    print("=" * 68)
+    print("🤖 TARS FULL SYSTEM ONLINE [All Milestones Active]")
+    print(f"🧠 Primary Model: {GEMINI_MODEL}")
+    print(f"🔊 Voice TTS: {'Enabled' if VOICE_ENABLED else 'Disabled'} ({VOICE_NAME})")
     print(f"🎙️  STT Language: {SPEECH_LANGUAGE} | Pause Tolerance: {VOICE_PAUSE_SECONDS}s")
-    print("🎙️  Commands:")
-    print("   • Type 'v' or 'voice'  ➔ Switch to Voice Mode (hands-free speaking)")
-    print("   • Type 't' or 'text'   ➔ Switch to Text Mode (keyboard typing)")
-    print("   • Press Ctrl+C         ➔ Instantly interrupt TARS while it is talking")
-    print("   • Type 'mute'/'unmute' ➔ Toggle spoken audio on/off")
-    print("   • Type 'exit'          ➔ Power down TARS")
-    print("=" * 65)
+    print("-" * 68)
+    print("🛠️  Capabilities:")
+    print("   • System & OS      ➔ Apps, Time, Battery, Shell commands")
+    print("   • Web & Chrome     ➔ Live Google/DDG Search, Chrome, Weather")
+    print("   • Workspace & Files➔ Search, Read, Write & Edit workspace files")
+    print("   • Memory (SQLite)  ➔ Remembers user facts & chat history")
+    print("   • Vision (Screen)  ➔ Screen capture & visual analysis")
+    print("   • Messaging        ➔ WhatsApp messaging")
+    print("   • Personality      ➔ Adjustable Humor & Honesty dials")
+    print("-" * 68)
+    print("💡 Commands:")
+    print("   • 'v' or 'voice'    ➔ Switch to Hands-Free Voice Mode")
+    print("   • 't' or 'text'     ➔ Switch to Text Mode")
+    print("   • 'screen'          ➔ Analyze current desktop screen visually")
+    print("   • 'briefing'        ➔ Generate full Daily Morning Briefing")
+    print("   • 'memory'          ➔ View remembered user facts")
+    print("   • 'mute'/'unmute'   ➔ Toggle audio voice")
+    print("   • 'exit'            ➔ Shut down TARS")
+    print("=" * 68)
+
+
+def main():
+    print_banner()
 
     try:
         tars = TarsAgent()
@@ -36,9 +52,9 @@ def main():
     listener = Listener(pause_threshold=VOICE_PAUSE_SECONDS, language=SPEECH_LANGUAGE)
     voice_mode = False
 
-    # Optional boot-up greeting
+    # Greeting
     try:
-        speaker.speak("TARS systems online and operational.")
+        speaker.speak("TARS fully operational. Ready for orders.")
     except Exception:
         pass
 
@@ -89,6 +105,22 @@ def main():
                     print("\n⌨️ In Text Mode.")
                     continue
 
+                if lower_msg in ["screen", "vision", "see screen"]:
+                    user_message = "Analyze my current desktop screen and tell me what is visible."
+
+                if lower_msg == "briefing":
+                    user_message = "Give me my full daily briefing."
+
+                if lower_msg in ["memory", "facts"]:
+                    facts = global_db.get_all_facts()
+                    print("\n🧠 [Remembered User Facts]:")
+                    if facts:
+                        for f in facts:
+                            print(f" • {f['key']}: {f['fact']}")
+                    else:
+                        print(" No facts stored yet. Tell TARS 'Remember that my name is...' to save facts.")
+                    continue
+
                 if lower_msg == "mute":
                     speaker.enabled = False
                     print("🔇 Audio voice muted.")
@@ -98,7 +130,7 @@ def main():
                     print("🔊 Audio voice unmuted.")
                     continue
 
-            # Generate response from Gemini with tools
+            # Process prompt with Gemini and execute tools
             response = tars.chat(user_message)
             print(f"\nTARS: {response}\n")
 
