@@ -6,6 +6,11 @@ A modular, autonomous AI assistant inspired by TARS from *Interstellar*, built w
 
 ## 🚀 Capabilities & Milestones
 
+### 🎥 4K Video Generation Engine (`generate_4k_video`)
+- **True 4K UHD Resolution (3840x2160)**: TARS programmatically renders 4K motion graphics, particle fields, starfields, gradients, title overlays, and cinematic clips.
+- **Save to Custom Folders**: Specify any target output directory (e.g., `generated_videos/`, `my_4k_reels/`, desktop folders).
+- **Customizable Duration & Style**: Supports custom prompts, durations, frame rates (30/60 fps), and visual styles.
+
 ### Milestone 1: Tool-Calling Engine & System Control
 - **Native Tool Calling**: Gemini autonomously chooses when to execute Python tools vs when to converse.
 - **System Tools**:
@@ -72,14 +77,3 @@ A modular, autonomous AI assistant inspired by TARS from *Interstellar*, built w
    ```bash
    python main.py
    ```
-
----
-
-## 🗺️ Project Roadmap
-- [x] **Milestone 1**: Core Tool Calling & System Control
-- [x] **Milestone 2**: Voice Interface (Speech-to-Text & Text-to-Speech)
-- [x] **Milestone 3**: Web Search, Chrome Integration & Live Intelligence
-- [x] **Milestone 4**: File System & Workspace Automation
-- [x] **Milestone 5**: Persistent Long-Term Memory (SQLite database)
-- [x] **Milestone 6**: Multimodal Screen & Vision Perception
-- [x] **Milestone 7**: Personality Tuning (Humor / Honesty) & Autonomous Schedulers

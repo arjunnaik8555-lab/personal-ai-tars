@@ -7,3 +7,6 @@ beautifulsoup4
 httpx
 edge-tts
 Pillow
+opencv-python
+numpy
+moviepy

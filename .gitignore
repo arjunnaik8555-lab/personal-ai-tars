@@ -14,3 +14,8 @@ __pycache__/
 
 # macOS
 .DS_Store
+
+# Generated video outputs
+*.mp4
+generated_videos/
+my_4k_reels/

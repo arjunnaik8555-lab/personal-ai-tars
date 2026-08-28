@@ -34,6 +34,9 @@ from tools.scheduler_tools import (
     set_reminder,
     get_daily_briefing,
 )
+from tools.video_tools import (
+    generate_4k_video,
+)
 
 # Comprehensive Tool Suite provided to TARS
 ALL_TOOLS = [
@@ -49,8 +52,11 @@ ALL_TOOLS = [
     fetch_webpage_content,
     get_weather,
     
-    # Communication
+    # Communication & Messaging
     send_whatsapp_message,
+    
+    # Media & Video Generation
+    generate_4k_video,
     
     # File System & Workspace
     search_files,
